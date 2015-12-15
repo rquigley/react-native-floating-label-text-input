@@ -1,7 +1,7 @@
 'use strict';
 
 var React = require('react-native');
-var { StyleSheet, Text, View, TextInput, Animated } = React;
+var { StyleSheet, Text, View, TextInput, Animated, PropTypes } = React;
 
 var FloatingLabel = React.createClass({
   getInitialState: function() {
@@ -64,6 +64,16 @@ var TextFieldHolder = React.createClass({
 });
 
 var FloatLabelTextField = React.createClass({
+  propTypes: {
+    ...TextInput.propTypes,
+    placeHolder: PropTypes.string,
+    value: PropTypes.string,
+    onFocus: PropTypes.func,
+    onBlur: PropTypes.func,
+    onChangeTextValue: PropTypes.func,
+    noBorder: PropTypes.bool,
+  },
+
   getInitialState: function() {
     return {
       focussed: false,
@@ -88,14 +98,14 @@ var FloatLabelTextField = React.createClass({
             </FloatingLabel>
             <TextFieldHolder withValue={this.state.text}>
               <TextInput
+                {...this.props}
+                ref='textinput'
                 placeholder={this.props.placeHolder}
                 style={[styles.valueText]}
-                value={this.state.text}
+                //value={this.state.text}
                 onFocus={this.setFocus}
                 onBlur={this.unsetFocus}
                 onChangeText={this.setText}
-                secureTextEntry={this.props.secureTextEntry}
-                keyboardType={this.props.keyboardType}
               />
             </TextFieldHolder>
           </View>
@@ -196,3 +206,4 @@ var styles = StyleSheet.create({
 });
 
 module.exports = FloatLabelTextField
+
